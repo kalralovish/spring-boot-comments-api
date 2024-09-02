@@ -30,6 +30,16 @@ public class CommentService {
         return commentRepository.findByDateOfCommentBetween(start, end);
     }
 
+    public List<Comment> getCommentsByUserNameAndDate(String userName, LocalDate date) {
+        LocalDateTime start = date.atStartOfDay();
+        LocalDateTime end = date.atTime(LocalTime.MAX);
+        // Using JPA method
+        // return commentRepository.findByAuthorAndDateOfCommentBetween(userName, start, end);
+
+        // Using native query method
+        return commentRepository.findByAuthorAndDateOfCommentBetweenNative(userName, start, end);
+    }
+
     public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }

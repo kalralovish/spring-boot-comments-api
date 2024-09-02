@@ -26,7 +26,9 @@ public class CommentController {
     public List<Comment> searchComments(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        if (username != null) {
+        if (username != null && date != null){
+            return commentService.getCommentsByUserNameAndDate(username, date);
+        } else if (username != null) {
             return commentService.getCommentsByUsername(username);
         } else if (date != null) {
             return commentService.getCommentsByDate(date);
